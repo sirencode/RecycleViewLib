@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+    <TextView
+        android:id="@+id/progress_widget_empty_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:gravity="center"
+        android:text="Thank you!\nBut your data on the another screen!"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_above="@+id/toad"
+        android:textColor="#0000ff"
+        style="@android:style/TextAppearance.Large"/>
+
+    <ImageView
+        android:id="@id/toad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_toad"/>
+</RelativeLayout>

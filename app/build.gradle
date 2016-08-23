@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 24
+  buildToolsVersion "24.0.1"
+
+  defaultConfig {
+    applicationId "diablo.lib.list.com"
+    minSdkVersion 14
+    targetSdkVersion 24
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  rootProject.dependenciesMethod rootProject.ext.appDps, { type, library, key ->
+    if (type == 'compile') {
+      compile library
+    } else if (type == 'debugCompile') {
+      debugCompile library
+    } else if (type == 'testCompile') {
+      testCompile library
+    } else if (type == 'apt') {
+      apt library
+    } else if (type == 'debuggableReleaseCompile') {
+      debuggableReleaseCompile library
+    } else if (type == 'debugProCompile') {
+      debugProCompile library
+    }
+  }
+
+  compile project(path: ':RefreshLoadLayout')
+}

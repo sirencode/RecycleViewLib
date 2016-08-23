@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 24
+  buildToolsVersion "24.0.1"
+
+  defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 24
+    versionCode 1
+    versionName "1.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+
+  rootProject.dependenciesMethod rootProject.ext.RefreshLoadLayoutDps, { type, library, key ->
+    if (type == 'compile') {
+      compile library
+    } else if (type == 'debugCompile') {
+      debugCompile library
+    } else if (type == 'testCompile') {
+      testCompile library
+    } else if (type == 'apt') {
+      apt library
+    } else if (type == 'debuggableReleaseCompile') {
+      debuggableReleaseCompile library
+    } else if (type == 'debugProCompile') {
+      debugProCompile library
+    }
+  }
+
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+}
