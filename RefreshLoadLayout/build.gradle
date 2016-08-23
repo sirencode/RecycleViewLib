@@ -1,12 +1,14 @@
 apply plugin: 'com.android.library'
 
+def globalConfiguration = rootProject.ext
+
 android {
-  compileSdkVersion 24
-  buildToolsVersion "24.0.1"
+  compileSdkVersion globalConfiguration.android.compileSdkVersion
+  buildToolsVersion globalConfiguration.android.buildToolsVersion
 
   defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 24
+    minSdkVersion globalConfiguration.android.minSdkVersion
+    targetSdkVersion globalConfiguration.android.targetSdkVersion
     versionCode 1
     versionName "1.0"
   }

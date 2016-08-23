@@ -76,3 +76,26 @@
       debugProCompile library
     }
     }
+
+#### 4 添加相同的版本控制
+
+    def globalConfiguration = rootProject.ext
+
+    android {
+    compileSdkVersion globalConfiguration.android.compileSdkVersion
+    buildToolsVersion globalConfiguration.android.buildToolsVersion
+
+    defaultConfig {
+    minSdkVersion globalConfiguration.android.minSdkVersion
+    targetSdkVersion globalConfiguration.android.targetSdkVersion
+    applicationId "diablo.lib.list.com"
+    versionCode 1
+    versionName "1.0"
+    }
+    buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    }
+    }

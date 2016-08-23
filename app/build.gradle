@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
+def globalConfiguration = rootProject.ext
+
 android {
-  compileSdkVersion 24
-  buildToolsVersion "24.0.1"
+  compileSdkVersion globalConfiguration.android.compileSdkVersion
+  buildToolsVersion globalConfiguration.android.buildToolsVersion
 
   defaultConfig {
+    minSdkVersion globalConfiguration.android.minSdkVersion
+    targetSdkVersion globalConfiguration.android.targetSdkVersion
     applicationId "diablo.lib.list.com"
-    minSdkVersion 14
-    targetSdkVersion 24
     versionCode 1
     versionName "1.0"
   }
