@@ -13,7 +13,8 @@ public class RecyclerViewActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new RecycleViewDemoFragment())
+                .replace(R.id.fragment_container, new SwipeRefreshFragment())
                 .commit();
     }
+
 }

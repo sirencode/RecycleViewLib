@@ -92,6 +92,8 @@ public class RecycleViewDemoFragment extends Fragment implements RefreshLoadMore
         return view;
     }
 
+
+
     @Override
     public void onRefresh() {
         System.out.println("onRefresh");
