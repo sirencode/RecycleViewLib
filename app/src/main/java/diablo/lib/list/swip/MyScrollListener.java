@@ -1,4 +1,4 @@
-package diablo.lib.list;
+package diablo.lib.list.swip;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

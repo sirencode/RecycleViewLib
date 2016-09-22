@@ -1,4 +1,4 @@
-package diablo.lib.list;
+package diablo.lib.list.third;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import diablo.lib.list.R;
+import diablo.lib.list.swip.MyBaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 

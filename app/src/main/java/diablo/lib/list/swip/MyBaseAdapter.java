@@ -1,4 +1,4 @@
-package diablo.lib.list;
+package diablo.lib.list.swip;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -25,11 +25,11 @@ public class MyBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return 0;
     }
 
-    protected boolean canLoad(){
+    public boolean canLoad(){
         return canLoad;
     }
 
-    protected void setCanLoad(boolean canLoad){
+    public void setCanLoad(boolean canLoad){
         this.canLoad = canLoad;
     }
 }

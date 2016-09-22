@@ -1,4 +1,4 @@
-package diablo.lib.list;
+package diablo.lib.list.third;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.list.lib.diablo.refreshloadlayout.RefreshLoadMoreLayout;
+import diablo.lib.list.R;
+import diablo.lib.list.RecyclerViewActivity;
 import java.util.ArrayList;
 import java.util.List;
 import ru.vang.progressswitcher.ProgressWidget;
