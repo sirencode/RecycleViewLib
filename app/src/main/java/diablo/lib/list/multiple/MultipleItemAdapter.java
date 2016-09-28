@@ -29,6 +29,7 @@ public class MultipleItemAdapter extends MyBaseAdapter {
     }
 
     public void addRefreshData(List<MultipleItemTypeData> dataList) {
+        this.datas.clear();
         this.datas.addAll(0, dataList);
         notifyDataSetChanged();
     }
@@ -52,8 +53,36 @@ public class MultipleItemAdapter extends MyBaseAdapter {
             View view =
                     LayoutInflater.from(context).inflate(R.layout.multiple_item3, parent, false);
             return new ItemThreeHolder(view);
+        } else if (SampleItemEum.LoadMoreItem.getValue() == viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.loadmoe_item, parent, false);
+            return new ItemLoadMoreHolder(view);
+        } else if (SampleItemEum.LoadMoreNoData.getValue() == viewType) {
+            View view = LayoutInflater.from(context)
+                    .inflate(R.layout.loadmore_nodata_item, parent, false);
+            return new ItemLoadMoreHolder(view);
         }
         return null;
+    }
+
+    public void showLoadMoreInfo() {
+        datas.add(new MultipleItemTypeData(
+                new RecycleItemTypeData(SampleItemEum.LoadMoreItem.getValue(),
+                        R.layout.loadmoe_item), "正在加载"));
+        notifyDataSetChanged();
+    }
+
+    public void hideLoadMoreInfo() {
+        if (datas.size() > 0) {
+            datas.remove(getItemCount() - 1);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void showLoadMoreNoDataInfo() {
+        datas.add(new MultipleItemTypeData(
+                new RecycleItemTypeData(SampleItemEum.LoadMoreNoData.getValue(),
+                        R.layout.loadmore_nodata_item), "没有数据了"));
+        notifyDataSetChanged();
     }
 
     @Override
@@ -69,6 +98,14 @@ public class MultipleItemAdapter extends MyBaseAdapter {
         } else if (datas.get(position).getRecycleItemTypeData().getItemType()
                 == SampleItemEum.ThirdItem.getValue()) {
             ItemThreeHolder holder1 = (ItemThreeHolder) holder;
+            holder1.title.setText(datas.get(position).getData());
+        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
+                == SampleItemEum.LoadMoreItem.getValue()) {
+            ItemLoadMoreHolder holder1 = (ItemLoadMoreHolder) holder;
+            holder1.title.setText(datas.get(position).getData());
+        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
+                == SampleItemEum.LoadMoreNoData.getValue()) {
+            ItemLoadMoreHolder holder1 = (ItemLoadMoreHolder) holder;
             holder1.title.setText(datas.get(position).getData());
         }
     }
@@ -107,6 +144,15 @@ public class MultipleItemAdapter extends MyBaseAdapter {
         public ItemThreeHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.item3_title);
+        }
+    }
+
+    private static class ItemLoadMoreHolder extends RecyclerView.ViewHolder {
+        public TextView title;
+
+        public ItemLoadMoreHolder(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.loadmore_item_title);
         }
     }
 }

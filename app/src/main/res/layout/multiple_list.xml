@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progress="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <ru.vang.progressswitcher.ProgressWidget
+        android:id="@+id/progress_widget"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        progress:animationIn="@anim/zoom_in"
+        progress:animationOut="@anim/zoom_out"
+        progress:emptyViewLayout="@layout/custom_empty_view"
+        progress:errorViewLayout="@layout/custom_error_view"
+        progress:progressViewLayout="@layout/custom_progress_view">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_widget"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:scrollbars="none" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </ru.vang.progressswitcher.ProgressWidget>
+</LinearLayout>

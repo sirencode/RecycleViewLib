@@ -8,7 +8,9 @@ public enum SampleItemEum {
 
     FirstItem(1),
     SecondItem(2),
-    ThirdItem(3);
+    ThirdItem(3),
+    LoadMoreItem(4),
+    LoadMoreNoData(5);
 
     private int value = 0;
 

@@ -13,11 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import diablo.lib.list.R;
 import diablo.lib.list.swip.MyScrollListener;
 import java.util.ArrayList;
 import java.util.List;
+import ru.vang.progressswitcher.ProgressWidget;
 
 /**
  * Created by Diablo on 16/9/22.
@@ -28,19 +28,20 @@ public class MultipleItemFragment extends Fragment implements SwipeRefreshLayout
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private MultipleItemAdapter adapter;
-    private TextView load;
+    private ProgressWidget progressWidget;
     private RecycleItemTypeData itemTypeData1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.swipe_refresh_lay, container, false);
+        View view = inflater.inflate(R.layout.multiple_list, container, false);
         initView(view);
         return view;
     }
 
     private void initDatas() {
+        datas.clear();
         itemTypeData1 = new RecycleItemTypeData(SampleItemEum.FirstItem.getValue(),
                 R.layout.multiple_item1);
         RecycleItemTypeData itemTypeData2 =
@@ -70,7 +71,17 @@ public class MultipleItemFragment extends Fragment implements SwipeRefreshLayout
     @TargetApi(Build.VERSION_CODES.M)
     private void initView(View base) {
         initDatas();
-        load = (TextView) base.findViewById(R.id.loading);
+        progressWidget = (ProgressWidget) base.findViewById(R.id.progress_widget);
+        progressWidget.setEmptyText("没有数据了!", R.id.progress_widget_empty_txt);
+        progressWidget.findViewById(R.id.progress_widget_error_txt)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onRefresh();
+                    }
+                });
+        progressWidget.showContent();
+
         recyclerView = (RecyclerView) base.findViewById(R.id.list);
         adapter = new MultipleItemAdapter(getActivity());
         recyclerView.setAdapter(adapter);
@@ -94,6 +105,8 @@ public class MultipleItemFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
+        initDatas();
+        progressWidget.showProgress();
         // 为演示设置一个5秒定时器（还是在主线程）
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -103,24 +116,30 @@ public class MultipleItemFragment extends Fragment implements SwipeRefreshLayout
                 datas.add(0, data);
                 adapter.addRefreshData(datas);
                 swipeRefreshLayout.setRefreshing(false);
+                progressWidget.showContent();
             }
         }, 1000);
     }
 
     private void onLoadMore() {
         // 为演示设置一个5秒定时器（还是在主线程）
-        load.setVisibility(View.VISIBLE);
+        adapter.showLoadMoreInfo();
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                load.setVisibility(View.GONE);
                 List<MultipleItemTypeData> data = new ArrayList<MultipleItemTypeData>();
-                for (int i = 0; i < 4; i++) {
-                    MultipleItemTypeData tem = new MultipleItemTypeData(itemTypeData1, "item" + i);
-                    data.add(tem);
+                //for (int i = 0; i < 4; i++) {
+                //    MultipleItemTypeData tem = new MultipleItemTypeData(itemTypeData1, "item" + i);
+                //    data.add(tem);
+                //}
+                adapter.hideLoadMoreInfo();
+                if (data != null || data.size() == 0) {
+                    adapter.showLoadMoreNoDataInfo();
+                }else {
+                    adapter.addLoadData(data);
+                    adapter.setCanLoad(true);
                 }
-                adapter.addLoadData(data);
-                adapter.setCanLoad(true);
             }
         }, 1000);
     }

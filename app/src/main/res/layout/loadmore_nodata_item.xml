@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="50dp"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/loadmore_item_title"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:text="没有数据了,已经加载完了。"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
