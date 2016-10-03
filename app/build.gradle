@@ -23,7 +23,7 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(path: ':RefreshLoadLayout')
+
 
   rootProject.dependenciesMethod rootProject.ext.appDps, { type, library, key ->
     if (type == 'compile') {

@@ -1,4 +1,4 @@
-package diablo.lib.list.swip;
+package diablo.lib.list.multiple;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +10,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 public class MyScrollListener extends RecyclerView.OnScrollListener {
 
     private boolean isSlidingToLast = false;
-    private MyBaseAdapter adapter;
-    private onLoadDataInterface onLoadMoreInterface;
+    private BaseMultipleAdapter adapter;
+    private OnLoadDataInterface onLoadMoreInterface;
 
-    public MyScrollListener(MyBaseAdapter adapter) {
+    public MyScrollListener(BaseMultipleAdapter adapter) {
         this.adapter = adapter;
     }
 
-    public void setOnLoadMoreInterface(onLoadDataInterface loadMoreData) {
+    public void setOnLoadMoreInterface(OnLoadDataInterface loadMoreData) {
         this.onLoadMoreInterface = loadMoreData;
     }
 
@@ -28,9 +28,6 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int firstPosition = 0;
         int lastPosition = 0;
-        //判断是当前layoutManager是否为LinearLayoutManager
-        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
-
         if (layoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
             firstPosition = linearManager.findFirstVisibleItemPosition();
@@ -56,16 +53,17 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
         //
         //}
 
-        //获取最后一个可见view的位
         if (lastPosition == layoutManager.getItemCount() - 1 && adapter.canLoad()
                 && isSlidingToLast) {
             adapter.setCanLoad(false);
             loadData();
+            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         }
     }
 
     private void loadData() {
         if (onLoadMoreInterface != null) {
+            adapter.showLoadMoreInfo();
             onLoadMoreInterface.loadMore();
         }
     }
@@ -111,9 +109,14 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
         return mainVal;
     }
 
-    public interface onLoadDataInterface {
+    /**
+     * 加载事件回调
+     */
+    public interface OnLoadDataInterface {
+        /**
+         * 加载更多
+         */
         void loadMore();
-
-//        void refresh();
+        //        void refresh();
     }
 }

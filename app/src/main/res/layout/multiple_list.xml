@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
+
     <ru.vang.progressswitcher.ProgressWidget
         android:id="@+id/progress_widget"
         android:layout_height="match_parent"
@@ -13,15 +14,20 @@
         progress:emptyViewLayout="@layout/custom_empty_view"
         progress:errorViewLayout="@layout/custom_error_view"
         progress:progressViewLayout="@layout/custom_progress_view">
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_widget"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:scrollbars="none" />
+
         </android.support.v4.widget.SwipeRefreshLayout>
+
     </ru.vang.progressswitcher.ProgressWidget>
+
 </LinearLayout>

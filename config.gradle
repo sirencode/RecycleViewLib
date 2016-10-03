@@ -23,9 +23,6 @@ ext {
       swipe_refresh_layout : 'compile'
   ]
 
-  RefreshLoadLayoutDps = [
-      support_recyclerview : "compile",
-  ]
 
   dependenciesMethod = { dps, closure ->
     dps.each { entry ->

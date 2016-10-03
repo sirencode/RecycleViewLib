@@ -7,117 +7,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import diablo.lib.list.R;
-import diablo.lib.list.swip.MyBaseAdapter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Diablo on 16/9/22.
  */
 
-public class MultipleItemAdapter extends MyBaseAdapter {
-
-    private Context context;
-    private List<MultipleItemTypeData> datas = new ArrayList<MultipleItemTypeData>();
+public class MultipleItemAdapter extends BaseMultipleAdapter {
+    public static final int FIRST_TYPE = 1;
+    public static final int SECOND_TYPE = 2;
 
     public MultipleItemAdapter(Context context) {
-        this.context = context;
-    }
-
-    public List<MultipleItemTypeData> getListData() {
-        return datas;
-    }
-
-    public void addRefreshData(List<MultipleItemTypeData> dataList) {
-        this.datas.clear();
-        this.datas.addAll(0, dataList);
-        notifyDataSetChanged();
-    }
-
-    public void addLoadData(List<MultipleItemTypeData> dataList) {
-        this.datas.addAll(dataList);
-        notifyDataSetChanged();
+        super(context);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (SampleItemEum.FirstItem.getValue() == viewType) {
+    public RecyclerView.ViewHolder onCreateMyViewHolder(ViewGroup parent, int viewType) {
+        if (FIRST_TYPE == viewType) {
             View view =
                     LayoutInflater.from(context).inflate(R.layout.multiple_item1, parent, false);
             return new ItemOneHolder(view);
-        } else if (SampleItemEum.SecondItem.getValue() == viewType) {
+        } else if (SECOND_TYPE == viewType) {
             View view =
                     LayoutInflater.from(context).inflate(R.layout.multiple_item2, parent, false);
             return new ItemTwoHolder(view);
-        } else if (SampleItemEum.ThirdItem.getValue() == viewType) {
-            View view =
-                    LayoutInflater.from(context).inflate(R.layout.multiple_item3, parent, false);
-            return new ItemThreeHolder(view);
-        } else if (SampleItemEum.LoadMoreItem.getValue() == viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.loadmoe_item, parent, false);
-            return new ItemLoadMoreHolder(view);
-        } else if (SampleItemEum.LoadMoreNoData.getValue() == viewType) {
-            View view = LayoutInflater.from(context)
-                    .inflate(R.layout.loadmore_nodata_item, parent, false);
-            return new ItemLoadMoreHolder(view);
         }
         return null;
     }
 
-    public void showLoadMoreInfo() {
-        datas.add(new MultipleItemTypeData(
-                new RecycleItemTypeData(SampleItemEum.LoadMoreItem.getValue(),
-                        R.layout.loadmoe_item), "正在加载"));
-        notifyDataSetChanged();
-    }
-
-    public void hideLoadMoreInfo() {
-        if (datas.size() > 0) {
-            datas.remove(getItemCount() - 1);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void showLoadMoreNoDataInfo() {
-        datas.add(new MultipleItemTypeData(
-                new RecycleItemTypeData(SampleItemEum.LoadMoreNoData.getValue(),
-                        R.layout.loadmore_nodata_item), "没有数据了"));
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (datas.get(position).getRecycleItemTypeData().getItemType()
-                == SampleItemEum.FirstItem.getValue()) {
+        if (datas.get(position).getItemType() == FIRST_TYPE) {
             ItemOneHolder holder1 = (ItemOneHolder) holder;
-            holder1.title.setText(datas.get(position).getData());
-        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
-                == SampleItemEum.SecondItem.getValue()) {
+            String data = (String) datas.get(position).getData();
+            holder1.title.setText(data);
+        } else if (datas.get(position).getItemType() == SECOND_TYPE) {
             ItemTwoHolder holder1 = (ItemTwoHolder) holder;
-            holder1.title.setText(datas.get(position).getData());
-        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
-                == SampleItemEum.ThirdItem.getValue()) {
-            ItemThreeHolder holder1 = (ItemThreeHolder) holder;
-            holder1.title.setText(datas.get(position).getData());
-        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
-                == SampleItemEum.LoadMoreItem.getValue()) {
-            ItemLoadMoreHolder holder1 = (ItemLoadMoreHolder) holder;
-            holder1.title.setText(datas.get(position).getData());
-        } else if (datas.get(position).getRecycleItemTypeData().getItemType()
-                == SampleItemEum.LoadMoreNoData.getValue()) {
-            ItemLoadMoreHolder holder1 = (ItemLoadMoreHolder) holder;
-            holder1.title.setText(datas.get(position).getData());
+            String data = (String) datas.get(position).getData();
+            holder1.title.setText(data);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return datas.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return datas.get(position).getRecycleItemTypeData().getItemType();
     }
 
     private static class ItemOneHolder extends RecyclerView.ViewHolder {
@@ -135,24 +62,6 @@ public class MultipleItemAdapter extends MyBaseAdapter {
         public ItemTwoHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.item2_title);
-        }
-    }
-
-    private static class ItemThreeHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-
-        public ItemThreeHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.item3_title);
-        }
-    }
-
-    private static class ItemLoadMoreHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-
-        public ItemLoadMoreHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.loadmore_item_title);
         }
     }
 }
