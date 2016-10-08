@@ -24,7 +24,6 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        //用来标记是否正在向最后一个滑动，既是否向下滑动
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int firstPosition = 0;
         int lastPosition = 0;
@@ -67,12 +66,6 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
             onLoadMoreInterface.loadMore();
         }
     }
-
-    //private void refreshData() {
-    //    if (onLoadMoreInterface != null) {
-    //        onLoadMoreInterface.refresh();
-    //    }
-    //}
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -117,6 +110,6 @@ public class MyScrollListener extends RecyclerView.OnScrollListener {
          * 加载更多
          */
         void loadMore();
-        //        void refresh();
+        //void refresh();
     }
 }

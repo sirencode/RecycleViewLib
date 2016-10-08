@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import diablo.lib.list.R;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,19 +17,18 @@ import java.util.List;
 
 public abstract class BaseMultipleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    //加载更多的itemtype
     private static final int LOAD_MORE_TYPE = 1001;
+    //没有更多数据的itemtype
     private static final int LOAD_NODATA_TYPE = 1002;
     private boolean canLoad = true;
 
     public Context context;
-    public List<MultipleItemTypeData> datas = new ArrayList<MultipleItemTypeData>();
+    public List<MultipleItemTypeData> datas =
+            Collections.synchronizedList(new ArrayList<MultipleItemTypeData>());
 
     public BaseMultipleAdapter(Context context) {
         this.context = context;
-    }
-
-    public List<MultipleItemTypeData> getListData() {
-        return datas;
     }
 
     /**
@@ -54,6 +54,10 @@ public abstract class BaseMultipleAdapter extends RecyclerView.Adapter<RecyclerV
             notifyDataSetChanged();
             setCanLoad(true);
         }
+    }
+
+    public List<MultipleItemTypeData> getCurrentDatas(){
+        return datas;
     }
 
     /**
@@ -84,7 +88,7 @@ public abstract class BaseMultipleAdapter extends RecyclerView.Adapter<RecyclerV
      * 隐藏加载更多提示
      */
     public void hideLoadMoreInfo() {
-        if (datas.size() > 0) {
+        if (datas.size() > 0 && datas.get(getItemCount()-1).getItemType() == LOAD_MORE_TYPE) {
             datas.remove(getItemCount() - 1);
             notifyDataSetChanged();
         }
