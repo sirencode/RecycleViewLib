@@ -80,8 +80,10 @@ public abstract class BaseMultipleAdapter extends RecyclerView.Adapter<RecyclerV
      * 显示加载更多提示
      */
     public void showLoadMoreInfo() {
-        datas.add(new MultipleItemTypeData(LOAD_MORE_TYPE, null));
-        notifyDataSetChanged();
+        if (datas.size() > 0 && datas.get(getItemCount()-1).getItemType() != LOAD_MORE_TYPE){
+            datas.add(new MultipleItemTypeData(LOAD_MORE_TYPE, null));
+            notifyDataSetChanged();
+        }
     }
 
     /**
@@ -98,8 +100,10 @@ public abstract class BaseMultipleAdapter extends RecyclerView.Adapter<RecyclerV
      * 显示没有更多数据
      */
     public void showLoadMoreNoDataInfo() {
-        datas.add(new MultipleItemTypeData(LOAD_NODATA_TYPE, null));
-        notifyDataSetChanged();
+        if (datas.size() > 0 && datas.get(getItemCount()-1).getItemType() != LOAD_NODATA_TYPE){
+            datas.add(new MultipleItemTypeData(LOAD_NODATA_TYPE, null));
+            notifyDataSetChanged();
+        }
     }
 
     @Override
